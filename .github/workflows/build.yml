@@ -85,6 +85,22 @@ jobs:
             exit 0
           fi
 
+          # Secrets are easy to paste with stray whitespace, which Telegram rejects with a 401.
+          TG_BOT_TOKEN=$(printf '%s' "$TG_BOT_TOKEN" | tr -d '[:space:]')
+          TG_CHAT_ID=$(printf '%s' "$TG_CHAT_ID" | tr -d '[:space:]')
+
+          # Sends a Telegram request and prints the API response, so failures are diagnosable
+          # from the job log without exposing the token.
+          tg() {
+            local method=$1 resp
+            shift
+            resp=$(curl -sS -X POST "https://api.telegram.org/bot${TG_BOT_TOKEN}/${method}" "$@")
+            case $resp in
+              *'"ok":true'*) echo "${method}: ok" ;;
+              *) echo "${method}: ${resp}" >&2; return 1 ;;
+            esac
+          }
+
           esc() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'; }
           SUBJECT=$(esc "${COMMIT_MESSAGE%%$'\n'*}")
 
@@ -94,17 +110,17 @@ jobs:
 
           <a href=\"${RUN_URL}\">Workflow run</a>"
 
-          curl -fsS -X POST "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage" \
+          tg sendMessage \
             --form-string chat_id="$TG_CHAT_ID" \
             --form-string parse_mode=HTML \
             --form-string disable_web_page_preview=true \
-            --form-string text="$MSG" > /dev/null
+            --form-string text="$MSG"
 
           shopt -s nullglob
           for apk in app/build/outputs/apk/*/*.apk; do
             echo "Uploading $(basename "$apk") to Telegram"
-            curl -fsS -X POST "https://api.telegram.org/bot${TG_BOT_TOKEN}/sendDocument" \
+            tg sendDocument \
               --form-string chat_id="$TG_CHAT_ID" \
               -F document=@"$apk" \
-              --form-string caption="$(basename "$apk")" > /dev/null
+              --form-string caption="$(basename "$apk")"
           done

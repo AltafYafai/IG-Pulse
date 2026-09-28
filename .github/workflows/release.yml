@@ -94,6 +94,22 @@ jobs:
             exit 0
           fi
 
+          # Secrets are easy to paste with stray whitespace, which Telegram rejects with a 401.
+          BOT_TOKEN=$(printf '%s' "$BOT_TOKEN" | tr -d '[:space:]')
+          CHANNEL_ID=$(printf '%s' "$CHANNEL_ID" | tr -d '[:space:]')
+
+          # Sends a Telegram request and prints the API response, so failures are diagnosable
+          # from the job log without exposing the token.
+          tg() {
+            local method=$1 resp
+            shift
+            resp=$(curl -sS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/${method}" "$@")
+            case $resp in
+              *'"ok":true'*) echo "${method}: ok" ;;
+              *) echo "${method}: ${resp}" >&2; return 1 ;;
+            esac
+          }
+
           esc() { sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' "$1"; }
           CHANGELOG=$(esc CHANGELOG.md)
 
@@ -105,17 +121,17 @@ jobs:
 
           ${CHANGELOG}"
 
-          curl -fsS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+          tg sendMessage \
             --form-string chat_id="$CHANNEL_ID" \
             --form-string parse_mode=HTML \
             --form-string disable_web_page_preview=true \
-            --form-string text="$MSG" > /dev/null
+            --form-string text="$MSG"
 
           shopt -s nullglob
           for apk in app/build/outputs/apk/release/*.apk; do
             echo "Uploading $(basename "$apk") to Telegram"
-            curl -fsS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
+            tg sendDocument \
               --form-string chat_id="$CHANNEL_ID" \
               -F document=@"$apk" \
-              --form-string caption="IG-Pulse ${VERSION} · $(basename "$apk")" > /dev/null
+              --form-string caption="IG-Pulse ${VERSION} · $(basename "$apk")"
           done
