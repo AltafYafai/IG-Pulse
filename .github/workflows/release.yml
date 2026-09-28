@@ -106,16 +106,16 @@ jobs:
           ${CHANGELOG}"
 
           curl -fsS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-            -F chat_id="$CHANNEL_ID" \
-            -F parse_mode=HTML \
-            -F disable_web_page_preview=true \
-            -F text="$MSG" > /dev/null
+            --form-string chat_id="$CHANNEL_ID" \
+            --form-string parse_mode=HTML \
+            --form-string disable_web_page_preview=true \
+            --form-string text="$MSG" > /dev/null
 
           shopt -s nullglob
           for apk in app/build/outputs/apk/release/*.apk; do
             echo "Uploading $(basename "$apk") to Telegram"
             curl -fsS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
-              -F chat_id="$CHANNEL_ID" \
+              --form-string chat_id="$CHANNEL_ID" \
               -F document=@"$apk" \
-              -F caption="IG-Pulse ${VERSION} · $(basename "$apk")" > /dev/null
+              --form-string caption="IG-Pulse ${VERSION} · $(basename "$apk")" > /dev/null
           done
