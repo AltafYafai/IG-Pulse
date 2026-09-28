@@ -8,8 +8,8 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     env:
-      BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      CHANNEL_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      CHANNEL_ID: ${{ secrets.TG_CHAT_ID }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -82,23 +82,40 @@ jobs:
           files: app/build/outputs/apk/release/*.apk
           tag_name: ${{ steps.vars.outputs.tag }}
 
-      - name: Read changelog
-        id: changelog
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const fs = require('fs');
-            core.setOutput('content', fs.readFileSync('CHANGELOG.md', 'utf8').trim());
-
+      # `secrets` cannot be read from a step `if:`, so the emptiness check happens in the
+      # script and the step is a no-op when Telegram is not configured.
       - name: Post to Telegram
-        if: ${{ env.BOT_TOKEN != '' }}
-        uses: Dev4Mod/telegram-github-action@master
-        with:
-          to: ${{ env.CHANNEL_ID }}
-          token: ${{ env.BOT_TOKEN }}
-          format: markdown
-          disable_web_page_preview: true
-          message: |
-            ${{ steps.changelog.outputs.content }}
+        env:
+          VERSION: ${{ steps.vars.outputs.version }}
+          TAG: ${{ steps.vars.outputs.tag }}
+        run: |
+          if [ -z "$BOT_TOKEN" ] || [ -z "$CHANNEL_ID" ]; then
+            echo "TG_BOT_TOKEN / TG_CHAT_ID not set - skipping Telegram notify"
+            exit 0
+          fi
 
-            Release: https://github.com/${{ github.repository }}/releases/tag/${{ steps.vars.outputs.tag }}
+          esc() { sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' "$1"; }
+          CHANGELOG=$(esc CHANGELOG.md)
+
+          MSG="<b>IG-Pulse ${VERSION} released</b>
+
+          <code>${TAG}</code>
+
+          <a href=\"https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG}\">GitHub release</a>
+
+          ${CHANGELOG}"
+
+          curl -fsS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -F chat_id="$CHANNEL_ID" \
+            -F parse_mode=HTML \
+            -F disable_web_page_preview=true \
+            -F text="$MSG" > /dev/null
+
+          shopt -s nullglob
+          for apk in app/build/outputs/apk/release/*.apk; do
+            echo "Uploading $(basename "$apk") to Telegram"
+            curl -fsS -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendDocument" \
+              -F chat_id="$CHANNEL_ID" \
+              -F document=@"$apk" \
+              -F caption="IG-Pulse ${VERSION} · $(basename "$apk")" > /dev/null
+          done
