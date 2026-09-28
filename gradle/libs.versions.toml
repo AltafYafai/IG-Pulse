@@ -6,7 +6,7 @@ markwon = "4.6.2"
 okhttp = "5.4.0"
 remotePreferences = "0.8"
 xposed-legacy = "82"
-agp = "9.3.1"
+agp = "9.4.1"
 dexkit = "2.2.0"
 
 [libraries]
