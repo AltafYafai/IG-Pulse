@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_privacy"
+        android:icon="@drawable/ic_privacy"
+        android:title="@string/privacy" />
+
+    <item
+        android:id="@+id/navigation_media"
+        android:icon="@drawable/ic_media"
+        android:title="@string/media" />
+
+    <item
+        android:id="@+id/navigation_customization"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/customization" />
+
+    <item
+        android:id="@+id/navigation_utilities"
+        android:icon="@drawable/ic_general"
+        android:title="@string/utilities" />
+
+</menu>

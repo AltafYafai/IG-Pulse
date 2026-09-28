@@ -1,0 +1,146 @@
+package com.igpulse.xposed.bridge.client
+
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.IBinder
+import android.os.Process
+import android.widget.Toast
+import com.igpulse.BuildConfig
+import com.igpulse.activities.ForceStartActivity
+import com.igpulse.xposed.bridge.IgIIFace
+import com.igpulse.xposed.bridge.service.BridgeService
+import com.igpulse.xposed.utils.Utils
+import com.igpulse.xposed.utils.WaeCoroutineExceptionHandler
+import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.coroutines.resume
+import kotlin.time.Duration.Companion.milliseconds
+
+class BridgeClientKt(private val context: Context) : BaseClient(), ServiceConnection {
+
+    override var service: IgIIFace? = null
+    private val scope =
+        CoroutineScope(Dispatchers.IO + SupervisorJob() + WaeCoroutineExceptionHandler)
+    private val connectionMutex = Mutex()
+
+    private var connectionContinuation: CancellableContinuation<Boolean>? = null
+
+
+    override suspend fun connect(): Boolean {
+        return performConnection()
+    }
+
+    private suspend fun performConnection(): Boolean = withContext(Dispatchers.IO) {
+        if (service?.asBinder()?.pingBinder() == true) {
+            return@withContext true
+        }
+
+        connectionMutex.withLock {
+            runCatching {
+                val intent = Intent().apply {
+                    component = ComponentName(
+                        BuildConfig.APPLICATION_ID,
+                        ForceStartActivity::class.java.name
+                    )
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                }
+                context.startActivity(intent)
+            }.onFailure { XposedBridge.log("Failed to start ForceStartActivity: ${it.message}") }
+
+            val connected = withTimeoutOrNull(3000L.milliseconds) {
+                suspendCancellableCoroutine<Boolean> { continuation ->
+                    connectionContinuation = continuation
+
+                    try {
+                        if (service != null) {
+                            runCatching { context.unbindService(this@BridgeClientKt) }
+                        }
+
+                        val intent = Intent().apply {
+                            setClassName(BuildConfig.APPLICATION_ID, BridgeService::class.java.name)
+                        }
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            context.bindService(
+                                intent,
+                                Context.BIND_AUTO_CREATE,
+                                { it.run() },
+                                this@BridgeClientKt
+                            )
+                        } else {
+                            val handlerThread = HandlerThread("BridgeClient").apply { start() }
+                            val handler = Handler(handlerThread.looper)
+
+                            XposedHelpers.callMethod(
+                                context, "bindServiceAsUser", intent, this@BridgeClientKt,
+                                Context.BIND_AUTO_CREATE, handler, Process.myUserHandle()
+                            )
+                        }
+                    } catch (e: Exception) {
+                        XposedBridge.log("Bind failed: ${e.message}")
+                        continuation.resume(false)
+                    }
+                }
+            } ?: false
+
+            return@withContext connected
+        }
+    }
+
+    override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+        service = IgIIFace.Stub.asInterface(binder)
+        XposedBridge.log("Service Connected: $service")
+        connectionContinuation?.let {
+            if (it.isActive) it.resume(true)
+        }
+    }
+
+    override fun onNullBinding(name: ComponentName?) {
+        XposedBridge.log("Service Binding returned null")
+        connectionContinuation?.let {
+            if (it.isActive) it.resume(false)
+        }
+    }
+
+    override fun onServiceDisconnected(name: ComponentName?) {
+        XposedBridge.log("Service Disconnected")
+        service = null
+    }
+
+    override fun tryReconnect() {
+        scope.launch {
+            if (service?.asBinder()?.pingBinder() == true) return@launch
+
+            var success = false
+            repeat(3) { attempt ->
+                XposedBridge.log("Attempting reconnect... ($attempt)")
+                if (performConnection()) {
+                    success = true
+                    return@repeat
+                }
+                delay(1500.milliseconds)
+            }
+
+            withContext(Dispatchers.Main) {
+                val msg = if (success) "Reconnected to Bridge" else "Failed to reconnect to Bridge"
+                Utils.showToast(msg, Toast.LENGTH_SHORT)
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/utilities">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="google_translate"
+            android:summary="@string/google_translate_summary"
+            android:title="@string/google_translate" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="copy_selection"
+            android:summary="@string/copy_selection_summary"
+            android:title="@string/copy_selection" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/general">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/thememode_entries"
+            android:entryValues="@array/thememode_values"
+            android:key="thememode"
+            android:title="@string/theme_mode" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="force_english"
+            android:summary="@string/force_english_summary"
+            android:title="@string/force_english" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="enablelogs"
+            android:summary="@string/enablelogs_summary"
+            android:title="@string/enablelogs" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/advanced">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="bypass_version_check"
+            android:summary="@string/bypass_version_check_summary"
+            android:title="@string/bypass_version_check" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="update_check"
+            android:title="@string/update_check" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="update_beta_channel"
+            android:summary="@string/update_beta_channel_summary"
+            android:title="@string/update_beta_channel" />
+
+        <Preference
+            android:key="clear_cache"
+            android:summary="@string/clear_cache_summary"
+            android:title="@string/clear_cache" />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:key="restart_instagram"
+        android:summary="@string/restart_instagram_summary"
+        android:title="@string/restart_instagram" />
+
+</PreferenceScreen>

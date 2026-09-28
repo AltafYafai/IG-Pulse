@@ -1,0 +1,78 @@
+<resources>
+
+    <style name="Base.AppTheme.Light" parent="Theme.Material3.DynamicColors.Light.Rikka">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimaryVariant">@color/primary_dark_light_light_status_bar</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:textAppearanceListItem">?textAppearanceSubtitle1</item>
+        <item name="android:colorAccent">?colorPrimary</item>
+        <item name="android:colorControlActivated">?colorPrimary</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowExitTransition">@android:transition/fade</item>
+        <item name="toolbarStyle">@style/ModernToolbarStyle</item>
+        <item name="preferenceCategoryStyle">@style/ModernPreferenceCategory</item>
+    </style>
+
+    <style name="Theme.Light" parent="Base.AppTheme.Light" />
+
+    <style name="Base.AppTheme" parent="Theme.Material3.DynamicColors.Dark.Rikka">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:textAppearanceListItem">?textAppearanceSubtitle1</item>
+        <item name="android:colorAccent">?colorPrimary</item>
+        <item name="android:colorControlActivated">?colorPrimary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/fade</item>
+        <item name="android:windowExitTransition">@android:transition/fade</item>
+        <item name="toolbarStyle">@style/ModernToolbarStyle</item>
+        <item name="preferenceCategoryStyle">@style/ModernPreferenceCategory</item>
+    </style>
+
+    <style name="Theme" parent="Base.AppTheme" />
+
+    <!-- The upstream layout for this style is not used here, so it inherits Preference's default. -->
+    <style name="ModernPreferenceCategory" parent="Preference.Category" />
+
+
+
+    <style name="ModernButton" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:minWidth">@dimen/button_min_width</item>
+        <item name="cornerRadius">@dimen/card_radius_medium</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="ModernButton.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:minWidth">@dimen/button_min_width</item>
+        <item name="cornerRadius">@dimen/card_radius_medium</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="BottomNavStyle" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/NavActiveIndicator</item>
+        <item name="itemIconTint">@color/nav_item_color</item>
+        <item name="itemTextColor">@color/nav_item_color</item>
+        <item name="labelVisibilityMode">selected</item>
+        <item name="android:minHeight">62dp</item>
+        <item name="elevation">12dp</item>
+    </style>
+
+    <style name="NavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/glass_chip_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full</item>
+    </style>
+
+</resources>

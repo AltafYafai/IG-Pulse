@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/customization">
+
+        <MultiSelectListPreference
+            android:entries="@array/tabshide_contents"
+            android:entryValues="@array/tabshide_values"
+            android:key="hidden_tabs"
+            android:summary="@string/hide_tabs_summary"
+            android:title="@string/hide_tabs" />
+
+        <ListPreference
+            android:defaultValue="3"
+            android:entries="@array/grid_columns_entries"
+            android:entryValues="@array/grid_columns_values"
+            android:key="grid_columns"
+            android:summary="@string/grid_columns_summary"
+            android:title="@string/grid_columns" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/custom_theme">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="changecolor"
+            android:summary="@string/custom_theme_summary"
+            android:title="@string/changecolor" />
+
+        <ListPreference
+            android:defaultValue="manual"
+            android:dependency="changecolor"
+            android:entries="@array/changecolor_mode_entries"
+            android:entryValues="@array/changecolor_mode_values"
+            android:key="changecolor_mode"
+            android:title="@string/changecolor_mode" />
+
+        <ListPreference
+            android:defaultValue="purple"
+            android:dependency="changecolor"
+            android:entries="@array/igpulse_color_preset_entries"
+            android:entryValues="@array/igpulse_color_preset_values"
+            android:key="color_preset"
+            android:title="@string/igpulse_color_preset" />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:key="restart_instagram"
+        android:summary="@string/restart_instagram_summary"
+        android:title="@string/restart_instagram" />
+
+</PreferenceScreen>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_text_material_inverse">@color/abc_primary_text_material_light</color>
+    <color name="primary_text_material">@color/abc_primary_text_material_dark</color>
+
+    <color name="ic_launcher_foreground">#FFFFFF</color>
+    <color name="ic_launcher_background">#F48FB1</color>
+
+    <color name="material_state_yellow">@color/material_yellow_A400</color>
+    <color name="material_state_green">@color/material_green_A400</color>
+    <color name="material_state_red">@color/material_red_A400</color>
+
+    <color name="codeview_background">#1E2227</color>
+    <color name="codeview_selector">#61aeee</color>
+    <color name="codeview_units">#d19a66</color>
+    <color name="codeview_important">#d19a66</color>
+    <color name="codeview_properties">#56b6c2</color>
+    <color name="codeview_comments">#757875</color>
+    <color name="codeview_text">#E0E0E0</color>
+    <color name="codeview_css_properties">#cc7832</color>
+    <color name="codeview_nth_child">#e0c46c</color>
+    <color name="primary_background">#121212</color>
+    <color name="codeview_strings">#24D52B</color>
+
+    <color name="surface_elevated">#1E1E1E</color>
+    <color name="surface_container">#252525</color>
+    <color name="surface_container_high">#2C2C2C</color>
+
+    <color name="nav_indicator">#1B5E20</color>
+    <color name="nav_background">#121212</color>
+
+    <color name="ripple_color">#33FFFFFF</color>
+
+    <color name="card_shadow">#00000000</color>
+
+    <color name="status_active">#00E676</color>
+    <color name="status_inactive">#FF5252</color>
+    <color name="status_warning">#FFAB40</color>
+
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3B3B3</color>
+    <color name="text_tertiary">#757575</color>
+    <color name="text_on_gradient">#FFFFFF</color>
+
+    <color name="background_color">#121212</color>
+    <color name="surface_color">#1E1E1E</color>
+    <color name="primary_color">#00A884</color>
+
+    <color name="gradient_start_primary">#26A69A</color>
+    <color name="gradient_end_primary">#00796B</color>
+
+
+    <color name="log_info">#E0E0E0</color>
+    <color name="log_success">#69F0AE</color>
+    <color name="log_warning">#FFD180</color>
+    <color name="log_error">#FF8A80</color>
+
+    <!-- Glassmorphic Emerald & Cyan Theme Colors (Dark) -->
+    <color name="glass_card_surface">#14222B</color>
+    <color name="glass_card_stroke">#2600E5FF</color>
+    <color name="glass_ripple">#2600E5FF</color>
+    <color name="glass_nav_background">#E60E1A22</color>
+    <color name="glass_nav_stroke">#3300E5FF</color>
+    <color name="glass_chip_surface">#1A2D38</color>
+    <color name="glass_chip_stroke">#3300E5FF</color>
+    <color name="toolbar_glass_top">#0F1A22</color>
+    <color name="toolbar_glass_bottom">#0B131A</color>
+    <color name="emerald_glow">#00E676</color>
+    <color name="cyan_glow">#00E5FF</color>
+</resources>

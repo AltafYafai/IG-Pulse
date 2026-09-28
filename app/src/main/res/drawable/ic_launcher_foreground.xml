@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer ambient glow ring around chat bubble -->
+    <path
+        android:pathData="M54,23 C70,23 83,35 83,50 C83,65 70,77 54,77 C49.5,77 45.2,75.9 41.3,73.9 L27,78 L31.6,65 C27.5,60.8 25,55.6 25,50 C25,35 38,23 54,23 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="135"
+                android:startColor="#4000E5FF"
+                android:endColor="#2000A884"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Main WhatsApp-style Chat Bubble -->
+    <path
+        android:pathData="M54,26 C68.3,26 80,36.7 80,50 C80,63.3 68.3,74 54,74 C49.8,74 45.8,73 42.3,71.2 L30,75 L34,63.5 C30.3,59.8 28,55.1 28,50 C28,36.7 39.7,26 54,26 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="135"
+                android:startColor="#00E5FF"
+                android:centerColor="#00A884"
+                android:endColor="#25D366"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Inner dark glassmorphic recessed canvas -->
+    <path
+        android:pathData="M54,29 C66.5,29 76.5,38.4 76.5,50 C76.5,61.6 66.5,71 54,71 C50.2,71 46.7,70.1 43.5,68.5 L34.5,71.5 L37.5,62.8 C34.2,59.4 32.2,54.9 32.2,50 C32.2,38.4 42.2,29 54,29 Z"
+        android:fillColor="#091E19" />
+
+    <!-- Stylized "W" Enhancement Monogram Base -->
+    <path
+        android:pathData="M41,43 L45,58 L49.5,58 L54,48 L58.5,58 L63,58 L67,43 L62.5,43 L60.5,52.5 L56,43 L52,43 L47.5,52.5 L45.5,43 Z"
+        android:fillColor="#26FFFFFF" />
+
+    <!-- Center Electric Lightning Enhancement Bolt -->
+    <path
+        android:pathData="M57,34 L43,51 L52,51 L48,66 L64,47 L55,47 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="90"
+                android:startColor="#00E5FF"
+                android:centerColor="#64FFDA"
+                android:endColor="#FFFFFF"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Inner brilliant white lightning core -->
+    <path
+        android:pathData="M56,37 L46,50 L53,50 L49.5,62 L61,48 L54.5,48 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Primary 4-point Diamond Sparkle (Top-Right) -->
+    <path
+        android:pathData="M73,23 L75,28 L80,30 L75,32 L73,37 L71,32 L66,30 L71,28 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="45"
+                android:startColor="#00E5FF"
+                android:endColor="#FFFFFF"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Secondary Ambient Sparkle (Top-Left) -->
+    <path
+        android:pathData="M33,31 L34.2,34 L37,35 L34.2,36 L33,39 L31.8,36 L29,35 L31.8,34 Z"
+        android:fillColor="#34D399" />
+
+</vector>

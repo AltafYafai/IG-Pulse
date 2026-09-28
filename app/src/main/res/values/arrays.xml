@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Locally known-good Instagram versions. The list is only used for the UI readout and as
+        the first half of the allowlist; a remote list is merged in at runtime so a new beta
+        does not require shipping a new APK. Anything at or above the baseline in
+        FeatureLoader.isFutureBetaVersion is loaded optimistically regardless.
+    -->
+    <string-array name="supported_versions">
+        <item>373.0.0.0</item>
+        <item>374.0.0.0</item>
+        <item>375.0.0.0</item>
+        <item>376.0.0.0</item>
+        <item>377.0.0.0</item>
+        <item>378.0.0.0</item>
+        <item>379.0.0.0</item>
+        <item>380.0.0.0</item>
+    </string-array>
+
+    <string-array name="scope">
+        <item>com.instagram.android</item>
+        <item>android</item>
+        <item>com.android.providers.settings</item>
+    </string-array>
+
+    <string-array name="thememode_entries">
+        <item>@string/follow_system</item>
+        <item>@string/dark_theme_on</item>
+        <item>@string/dark_theme_off</item>
+    </string-array>
+    <string-array name="thememode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="changecolor_mode_entries">
+        <item>@string/changecolor_mode_manual</item>
+        <item>@string/changecolor_mode_monet</item>
+    </string-array>
+    <string-array name="changecolor_mode_values">
+        <item>manual</item>
+        <item>monet</item>
+    </string-array>
+
+    <string-array name="tabshide_contents">
+        <item>@string/tab_home</item>
+        <item>@string/tab_search</item>
+        <item>@string/tab_reels</item>
+        <item>@string/tab_shopping</item>
+    </string-array>
+    <string-array name="tabshide_values">
+        <item>home</item>
+        <item>search</item>
+        <item>reels</item>
+        <item>shopping</item>
+    </string-array>
+
+    <string-array name="grid_columns_values">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="grid_columns_entries">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="igpulse_color_preset_entries">
+        <item>@string/color_preset_green</item>
+        <item>@string/color_preset_blue</item>
+        <item>@string/color_preset_cyan</item>
+        <item>@string/color_preset_purple</item>
+        <item>@string/color_preset_orange</item>
+        <item>@string/color_preset_red</item>
+        <item>@string/color_preset_pink</item>
+    </string-array>
+    <string-array name="igpulse_color_preset_values">
+        <item>green</item>
+        <item>blue</item>
+        <item>cyan</item>
+        <item>purple</item>
+        <item>orange</item>
+        <item>red</item>
+        <item>pink</item>
+    </string-array>
+
+    <string-array name="image_picker">
+        <item>image/*</item>
+    </string-array>
+</resources>

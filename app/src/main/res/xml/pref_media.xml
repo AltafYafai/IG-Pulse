@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/media">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="download_media"
+            android:summary="@string/download_media_summary"
+            android:title="@string/download_media" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="download_story"
+            android:summary="@string/download_story_summary"
+            android:title="@string/download_story" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="download_reel"
+            android:summary="@string/download_reel_summary"
+            android:title="@string/download_reel" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:dependency="download_media"
+            android:key="download_named_after_user"
+            android:summary="@string/download_named_after_user_summary"
+            android:title="@string/download_named_after_user" />
+
+        <Preference
+            android:key="download_local"
+            android:summary="/sdcard/Download/IG-Pulse"
+            android:title="@string/download_location" />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:key="restart_instagram"
+        android:summary="@string/restart_instagram_summary"
+        android:title="@string/restart_instagram" />
+
+</PreferenceScreen>

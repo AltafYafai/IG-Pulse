@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IG-Pulse</string>
+    <string name="app_desc">Customisation, privacy and download tweaks for the official Instagram app.</string>
+
+    <!-- Navigation / structure -->
+    <string name="privacy">Privacy</string>
+    <string name="media">Media</string>
+    <string name="customization">Customization</string>
+    <string name="utilities">Utilities</string>
+    <string name="about">About</string>
+    <string name="general">General</string>
+    <string name="advanced">Advanced</string>
+    <string name="story">Stories</string>
+    <string name="share">Share</string>
+
+    <!-- Privacy: read receipts and presence -->
+    <string name="hide_seen">Hide read receipts</string>
+    <string name="hide_seen_summary">Do not send “seen” for direct threads. The other person keeps seeing your messages as unread.</string>
+    <string name="hide_seen_thread_list">Selected accounts only</string>
+    <string name="hide_seen_thread_list_summary">Leave empty to hide read receipts for everyone.</string>
+    <string name="hide_typing">Hide typing indicator</string>
+    <string name="hide_typing_summary">Never broadcast the typing/activity indicator to anyone.</string>
+    <string name="hide_active_status">Hide Active Now</string>
+    <string name="hide_active_status_summary">Do not report yourself as active. Others still see you online when you are in the app.</string>
+    <string name="hide_story_views">Hide story views from selected accounts</string>
+    <string name="hide_story_views_summary">Leave empty to hide your story views from everyone. A global list applies to every viewer.</string>
+    <string name="screenshot_notify">Notify on screenshot / screen record</string>
+    <string name="screenshot_notify_summary">Show a notification when someone captures a direct message or story.</string>
+
+    <!-- Privacy: misc -->
+    <string name="anti_emoticon_analytics">Strip emoticon/analytics payloads</string>
+    <string name="anti_emoticon_analytics_summary">Blocks the event payloads Instagram attaches to outgoing requests. May break some server-side features.</string>
+    <string name="hide_view_once">Disable disappearing messages</string>
+    <string name="hide_view_once_summary">Keep view-once direct messages readable after the timer expires.</string>
+
+    <!-- Media / downloader -->
+    <string name="download_media">Enable media download</string>
+    <string name="download_media_summary">Adds a download action to the photo and video viewer.</string>
+    <string name="download_story">Enable story download</string>
+    <string name="download_story_summary">Adds a download action to the story viewer.</string>
+    <string name="download_reel">Enable reel download</string>
+    <string name="download_reel_summary">Adds a download action to the reel viewer. Reels are fetched at source resolution.</string>
+    <string name="download_named_after_user">Name files after the author</string>
+    <string name="download_named_after_user_summary">Prefix downloaded files with the account name instead of a timestamp.</string>
+    <string name="download_local">Download folder</string>
+    <string name="download_location">Where downloads are saved</string>
+    <string name="copy_caption">Copy caption</string>
+    <string name="copy_caption_summary">Adds a “copy caption” action to post menus.</string>
+
+    <!-- Customization -->
+    <string name="hide_tabs">Hide bottom navigation tabs</string>
+    <string name="hide_tabs_summary">Remove tabs from the bottom bar. Instagram still expects every tab index to exist, so hidden tabs are disabled rather than deleted.</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_search">Search</string>
+    <string name="tab_reels">Reels</string>
+    <string name="tab_shopping">Shop</string>
+    <string name="custom_theme">Custom theme</string>
+    <string name="custom_theme_summary">Override Instagram colours across light and dark mode.</string>
+    <string name="changecolor">Enable colour overrides</string>
+    <string name="changecolor_mode">Colour source</string>
+    <string name="changecolor_mode_manual">Manual</string>
+    <string name="changecolor_mode_monet">System (Monet)</string>
+    <string name="primary_color">Primary colour</string>
+    <string name="background_color">Background colour</string>
+    <string name="text_color">Text colour</string>
+    <string name="color_preset_green">Green</string>
+    <string name="color_preset_blue">Blue</string>
+    <string name="color_preset_cyan">Cyan</string>
+    <string name="color_preset_purple">Purple</string>
+    <string name="color_preset_orange">Orange</string>
+    <string name="color_preset_red">Red</string>
+    <string name="color_preset_pink">Pink</string>
+    <string name="igpulse_color_preset">Colour preset</string>
+    <string name="igpulse_color_mode">Colour mode</string>
+    <string name="igpulse_color_mode_preset">Preset</string>
+    <string name="igpulse_color_mode_auto_monet">Automatic (Monet)</string>
+    <string name="grid_columns">Profile grid columns</string>
+    <string name="grid_columns_summary">Number of columns in the profile grid. 0 keeps Instagram’s own value.</string>
+    <string name="hide_animations">Disable animations</string>
+    <string name="hide_animations_summary">Skips shared-element and fragment transitions to make navigation feel faster.</string>
+
+    <!-- Utilities -->
+    <string name="google_translate">Inline translate</string>
+    <string name="google_translate_summary">Adds a translate action to direct message bubbles and post captions.</string>
+    <string name="copy_selection">Copy selected text</string>
+    <string name="copy_selection_summary">Copy text without showing the system selection handles.</string>
+    <string name="hide_typing_scheduler">Ghost typing</string>
+    <string name="hide_typing_scheduler_summary">Keeps the typing indicator on for a chosen duration after you stop typing.</string>
+    <string name="ghost_typing_duration">Ghost typing duration (seconds)</string>
+
+    <!-- General -->
+    <string name="enablelogs">Verbose logging</string>
+    <string name="enablelogs_summary">Writes hook resolution results to the LSPosed log.</string>
+    <string name="theme_mode">Theme</string>
+    <string name="follow_system">Follow system</string>
+    <string name="dark_theme_on">Dark</string>
+    <string name="dark_theme_off">Light</string>
+    <string name="force_english">Force English</string>
+    <string name="force_english_summary">Ignore the system locale for this app.</string>
+    <string name="bypass_version_check">Ignore version warnings</string>
+    <string name="bypass_version_check_summary">Load hooks even on Instagram versions outside the known-good list.</string>
+    <string name="update_check">Check for updates</string>
+    <string name="update_beta_channel">Include pre-releases</string>
+    <string name="update_beta_channel_summary">Also consider GitHub pre-releases when checking for updates.</string>
+    <string name="restart_instagram">Restart Instagram</string>
+    <string name="restart_instagram_summary">Most changes need a restart to take effect.</string>
+    <string name="clear_cache">Clear resolution cache</string>
+    <string name="clear_cache_summary">Forces every obfuscated symbol to be resolved again on the next launch.</string>
+    <string name="cleared_cache">Resolution cache cleared</string>
+    <string name="module_not_installed">IG-Pulse is not installed</string>
+    <string name="module_not_active">IG-Pulse is not active</string>
+    <string name="module_not_active_summary">Enable the module in LSPosed and reboot, then open Instagram once.</string>
+
+    <!-- Storage -->
+    <string name="storage_permission">Storage access needed</string>
+    <string name="permission_storage">Downloads are written through the IG-Pulse app. Grant it access to your files to continue.</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+
+    <!-- Errors / status -->
+    <string name="error_detected">Some features could not load</string>
+    <string name="version_error">The following features did not attach to this Instagram build:\n\n</string>
+    <string name="alert_module_notfound">IG-Pulse was uninstalled while hooks were still active. Reinstall it and restart Instagram.</string>
+    <string name="starting_cache">Rebuilding symbol cache…</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="copy_to_clipboard">Copy details</string>
+    <string name="rebooting">Restarting Instagram…</string>
+    <string name="rebooting_failed">Could not restart Instagram. Close it manually.</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="disabled">Disabled</string>
+    <string name="version">Version</string>
+    <string name="released">Released</string>
+    <string name="update_available">Update available</string>
+    <string name="update_now">Update</string>
+    <string name="ignore">Ignore</string>
+
+    <!-- Crash report -->
+    <string name="crash_title">Something went wrong</string>
+    <string name="crash_copy">Copy report</string>
+    <string name="crash_android_version">Android</string>
+    <string name="device_model">Device</string>
+    <string name="igpulse_version">IG-Pulse version</string>
+    <string name="igpulse_package">IG-Pulse package</string>
+    <string name="instagram_version">Instagram version</string>
+    <string name="instagram_package">Instagram package</string>
+
+    <!-- About -->
+    <string name="about_description">IG-Pulse is an LSPosed module for the official Instagram app. It is not affiliated with, endorsed by, or supported by Instagram or Meta.</string>
+    <string name="source_code">Source code</string>
+    <string name="report_issue">Report an issue</string>
+    <string name="lsposed_notice">IG-Pulse needs LSPosed (or a compatible Xposed implementation) and a rooted or custom-rom device.</string>
+</resources>
