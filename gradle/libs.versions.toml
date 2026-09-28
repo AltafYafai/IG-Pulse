@@ -15,7 +15,7 @@ libxposed-legacy = { group = "de.robv.android.xposed", name = "api", version.ref
 
 androidx-activity = { module = "androidx.activity:activity", version = "1.13.0" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version = "2.2.1" }
-androidx-fragment = { module = "androidx.fragment:fragment", version = "1.8.9" }
+androidx-fragment = { module = "androidx.fragment:fragment", version = "1.9.1" }
 androidx-preference = { module = "androidx.preference:preference", version = "1.2.1" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version = "1.4.0" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version = "1.1.0" }
