@@ -23,7 +23,7 @@ jobs:
           cache: gradle
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
           # The action's default `packages` is `tools platform-tools`, but the `tools` package
           # was removed from Google's repository, so sdkmanager exits 1. Pin a package that
