@@ -25,8 +25,10 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
-          # No fixed `packages` list: ubuntu-latest already ships an SDK, and AGP downloads
-          # compileSdk 37 itself once the licences are accepted (this is what WA relies on).
+          # The action's default `packages` is `tools platform-tools`, but the `tools` package
+          # was removed from Google's repository, so sdkmanager exits 1. Pin a package that
+          # still exists; AGP downloads compileSdk 37 itself once licences are accepted.
+          packages: platform-tools
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: false
 
