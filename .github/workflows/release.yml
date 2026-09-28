@@ -72,7 +72,7 @@ jobs:
 
       - name: Publish to GitHub
         if: steps.token.outputs.set == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
           # Set the RELEASES_REPO variable to publish somewhere other than this repository.
