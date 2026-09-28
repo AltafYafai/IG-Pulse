@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_medium">
+
+        <!-- Overall state -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardInfoStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            app:cardBackgroundColor="@color/surface_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_medium">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/heroDot"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:background="@drawable/status_dot" />
+
+                    <TextView
+                        android:id="@+id/heroTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/heroMessage"
+                    style="@style/SectionDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small" />
+
+                <TextView
+                    android:id="@+id/heroDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="12.5sp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Status -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardInfoStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            app:cardBackgroundColor="@color/surface_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_medium"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingBottom="@dimen/spacing_small">
+
+                <include
+                    android:id="@+id/rowModule"
+                    layout="@layout/item_status_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/surface_container_high" />
+
+                <include
+                    android:id="@+id/rowHooks"
+                    layout="@layout/item_status_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/surface_container_high" />
+
+                <include
+                    android:id="@+id/rowInstagram"
+                    layout="@layout/item_status_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/surface_container_high" />
+
+                <include
+                    android:id="@+id/rowSupported"
+                    layout="@layout/item_status_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/surface_container_high" />
+
+                <include
+                    android:id="@+id/rowModuleVersion"
+                    layout="@layout/item_status_row" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Environment -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CardInfoStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            app:cardBackgroundColor="@color/surface_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/spacing_medium"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingBottom="@dimen/spacing_small">
+
+                <include
+                    android:id="@+id/rowAndroid"
+                    layout="@layout/item_status_row" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/surface_container_high" />
+
+                <include
+                    android:id="@+id/rowDevice"
+                    layout="@layout/item_status_row" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/refreshBtn"
+                style="@style/ModernButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/refresh_status"
+                app:icon="@drawable/refresh"
+                app:strokeColor="?attr/colorPrimary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/restartBtn"
+                style="@style/ModernButton.Outlined"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_weight="1"
+                android:text="@string/restart_instagram"
+                app:icon="@drawable/ic_restore"
+                app:strokeColor="?attr/colorPrimary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

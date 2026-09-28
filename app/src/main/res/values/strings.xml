@@ -4,6 +4,7 @@
     <string name="app_desc">Customisation, privacy and download tweaks for the official Instagram app.</string>
 
     <!-- Navigation / structure -->
+    <string name="dashboard">Dashboard</string>
     <string name="privacy">Privacy</string>
     <string name="media">Media</string>
     <string name="customization">Customization</string>
@@ -111,6 +112,41 @@
     <string name="module_not_installed">IG-Pulse is not installed</string>
     <string name="module_not_active">IG-Pulse is not active</string>
     <string name="module_not_active_summary">Enable the module in LSPosed and reboot, then open Instagram once.</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_ok_title">Everything looks good</string>
+    <string name="dashboard_ok_message">IG-Pulse is active and its hooks are attached to Instagram.</string>
+    <string name="dashboard_module_off_title">Module not active</string>
+    <string name="dashboard_module_off_message">Enable IG-Pulse in LSPosed, scope it to Instagram, then reboot.</string>
+    <string name="dashboard_hooks_pending_title">Waiting for Instagram</string>
+    <string name="dashboard_hooks_pending_message">Open Instagram once so the module can attach its hooks.</string>
+    <string name="dashboard_hooks_missing_title">Hooks not detected</string>
+    <string name="dashboard_hooks_missing_message">Open Instagram once with the module enabled, then tap Refresh.</string>
+    <string name="dashboard_hooks_error_title">Hooks loaded with errors</string>
+    <string name="dashboard_hooks_error_message">%1$d feature(s) did not attach to this Instagram build. See the LSPosed log for details.</string>
+    <string name="dashboard_instagram_missing_title">Instagram not installed</string>
+    <string name="dashboard_instagram_missing_message">Install the official Instagram app, then open it once.</string>
+    <string name="dashboard_checking">Checking…</string>
+    <string name="dashboard_last_seen">Last handshake %1$s</string>
+    <string name="dashboard_no_handshake">No handshake received yet</string>
+    <string name="row_module">LSPosed module</string>
+    <string name="row_module_active">Loaded into the IG-Pulse settings app</string>
+    <string name="row_module_inactive">Enable it in LSPosed, then reboot</string>
+    <string name="row_hooks">Instagram hooks</string>
+    <string name="row_hooks_loaded">Instagram %1$s · seen %2$s</string>
+    <string name="row_hooks_pending">Not detected — open Instagram once</string>
+    <string name="row_instagram">Installed Instagram</string>
+    <string name="row_supported_versions">Supported versions</string>
+    <string name="row_module_version">IG-Pulse version</string>
+    <string name="state_active">Active</string>
+    <string name="state_inactive">Inactive</string>
+    <string name="state_loaded">Loaded</string>
+    <string name="state_not_loaded">Not loaded</string>
+    <string name="state_errors">Errors</string>
+    <string name="state_supported">Supported</string>
+    <string name="state_unsupported">Unsupported</string>
+    <string name="row_not_installed">Not installed</string>
+    <string name="refresh_status">Refresh</string>
 
     <!-- Storage -->
     <string name="storage_permission">Storage access needed</string>

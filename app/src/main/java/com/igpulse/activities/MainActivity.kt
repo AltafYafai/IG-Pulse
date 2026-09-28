@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val pages = listOf(
+        R.string.dashboard to DashboardFragment::class.java,
         R.string.privacy to PrivacyFragment::class.java,
         R.string.media to MediaFragment::class.java,
         R.string.customization to CustomizationFragment::class.java,
@@ -59,13 +60,21 @@ class MainActivity : AppCompatActivity() {
         })
 
         if (!isModuleActive()) {
-            binding.root.post {
-                com.igpulse.xposed.core.IgCore.showAlert(
-                    this,
-                    title = getString(R.string.module_not_installed),
-                    message = getString(R.string.lsposed_notice),
-                    positive = getString(R.string.ok)
-                )
+            // The dashboard is the first tab and carries the same state, so the blocking
+            // dialog is only worth showing once - it used to repeat on every launch.
+            val shown = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("module_notice_shown", false)
+            if (!shown) {
+                binding.root.post {
+                    com.igpulse.xposed.core.IgCore.showAlert(
+                        this,
+                        title = getString(R.string.module_not_installed),
+                        message = getString(R.string.lsposed_notice),
+                        positive = getString(R.string.ok)
+                    )
+                }
+                androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit().putBoolean("module_notice_shown", true).apply()
             }
         }
     }
@@ -98,6 +107,7 @@ class MainActivity : AppCompatActivity() {
     private fun isModuleActive(): Boolean = isXposedEnabled()
 
     private fun idFor(fragment: Class<*>): Int = when (fragment) {
+        DashboardFragment::class.java -> R.id.navigation_dashboard
         PrivacyFragment::class.java -> R.id.navigation_privacy
         MediaFragment::class.java -> R.id.navigation_media
         CustomizationFragment::class.java -> R.id.navigation_customization
@@ -105,12 +115,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private class PageAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
-        override fun getItemCount(): Int = 4
+        override fun getItemCount(): Int = 5
 
         override fun createFragment(position: Int): androidx.fragment.app.Fragment = when (position) {
-            0 -> PrivacyFragment()
-            1 -> MediaFragment()
-            2 -> CustomizationFragment()
+            0 -> DashboardFragment()
+            1 -> PrivacyFragment()
+            2 -> MediaFragment()
+            3 -> CustomizationFragment()
             else -> UtilitiesFragment()
         }
     }

@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/dashboard" />
+
+    <item
         android:id="@+id/navigation_privacy"
         android:icon="@drawable/ic_privacy"
         android:title="@string/privacy" />
@@ -13,7 +18,7 @@
 
     <item
         android:id="@+id/navigation_customization"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_round_settings_24"
         android:title="@string/customization" />
 
     <item

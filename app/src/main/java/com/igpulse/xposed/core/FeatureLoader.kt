@@ -18,6 +18,7 @@ import com.crossbowffs.remotepreferences.RemotePreferences
 import com.igpulse.BuildConfig
 import com.igpulse.R
 import com.igpulse.IGPulse
+import com.igpulse.VersionSupport
 import com.igpulse.activities.CrashReportActivity
 import com.igpulse.xposed.core.devkit.Unobfuscator
 import com.igpulse.xposed.core.devkit.UnobfuscatorCache
@@ -60,6 +61,13 @@ class FeatureLoader {
         private var crashHandlerInstalled = false
         private const val UPDATE_CHECK_COOLDOWN_MS = 6 * 60 * 60 * 1000L
         private var lastUpdateCheckScheduledAt = 0L
+
+        /**
+         * Read by the settings dashboard over [sendEnabledBroadcast]: whether the last load in
+         * this Instagram process ended with every feature attached.
+         */
+        @Volatile
+        private var hooksLoaded = false
 
         @JvmStatic
         fun start(loader: ClassLoader, sourceDir: String) {
@@ -112,6 +120,7 @@ class FeatureLoader {
                             disableExpirationVersion(app.classLoader)
                             loadFeatures(loader, pref, packageInfo.versionName!!)
                             scheduleUpdateCheck(pref)
+                            hooksLoaded = true
                             sendEnabledBroadcast(app)
 
                             XposedBridge.log("[IG-Pulse] Hooks installed")
@@ -126,6 +135,8 @@ class FeatureLoader {
                                     errorDetail = e.stackTraceToString()
                                 )
                             )
+                            hooksLoaded = false
+                            sendEnabledBroadcast(app)
                         }
                     }
                 }
@@ -226,11 +237,19 @@ class FeatureLoader {
             )
         }
 
+        /**
+         * Hands the settings app everything the dashboard renders: which Instagram build the
+         * hooks attached to, whether the load succeeded and how many features failed.
+         */
         private fun sendEnabledBroadcast(context: Context) {
             try {
                 val intent = Intent("${BuildConfig.APPLICATION_ID}.RECEIVER_IG").apply {
                     putExtra("VERSION", context.packageManager.getPackageInfo(context.packageName, 0).versionName)
                     putExtra("PKG", context.packageName)
+                    putExtra("HOOKS_LOADED", hooksLoaded)
+                    putExtra("ERRORS", errors.size)
+                    putExtra("MODULE_VERSION", BuildConfig.VERSION_NAME)
+                    putExtra("SUPPORTED", supportedVersions?.joinToString(",") ?: "")
                     setPackage(BuildConfig.APPLICATION_ID)
                 }
                 context.sendBroadcast(intent)
@@ -382,34 +401,12 @@ class FeatureLoader {
         fun errors(): List<String> = synchronized(errors) { errors.toList() }.map { it.toString() }
 
         @JvmStatic
-        fun isVersionSupported(version: String?, supported: List<String>?): Boolean {
-            if (version == null || supported.isNullOrEmpty()) return false
-            if (supported.any { version.startsWith(it.replace(".xx", "")) }) return true
-            return isFutureBetaVersion(version)
-        }
+        fun isVersionSupported(version: String?, supported: List<String>?): Boolean =
+            VersionSupport.isVersionSupported(version, supported)
 
-        /**
-         * Instagram ships stable and beta from the same version line, so a hard block on the
-         * allowlist bricks every user on a new build. Instead anything at or above the baseline
-         * is loaded optimistically and per-feature failures are reported individually.
-         */
         @JvmStatic
-        fun isFutureBetaVersion(version: String?): Boolean {
-            if (version.isNullOrBlank()) return false
-            val match = Regex("""^(\d+)\.(\d+)\.(\d+)""").find(version.trim()) ?: return false
-            val parts = (1..3).map { match.groupValues[it].toInt() }
-            val (major, minor, patch) = Triple(parts[0], parts[1], parts[2])
-            val baseline = BASELINE
-            return when {
-                major > baseline.first -> true
-                major < baseline.first -> false
-                minor > baseline.second -> true
-                minor < baseline.second -> false
-                else -> patch >= baseline.third
-            }
-        }
-
-        private val BASELINE = Triple(373, 0, 0) // first Instagram version this module shipped against
+        fun isFutureBetaVersion(version: String?): Boolean =
+            VersionSupport.isFutureBetaVersion(version)
 
         private fun getRemoteSupportedVersions(pref: SharedPreferences): List<String>? {
             try {
