@@ -7,7 +7,7 @@ okhttp = "5.4.0"
 remotePreferences = "0.8"
 xposed-legacy = "82"
 agp = "9.3.1"
-dexkit = "2.2.0"
+dexkit = "2.3.0"
 
 [libraries]
 arscblamer = { module = "com.github.DavidArsene:arscblamer", version.ref = "arscblamer" }
