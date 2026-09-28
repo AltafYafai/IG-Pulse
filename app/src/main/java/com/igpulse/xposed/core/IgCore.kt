@@ -7,10 +7,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
+import android.content.res.Resources
+import android.content.res.XModuleResources
 import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.igpulse.BuildConfig
+import com.igpulse.IGPulse
 import com.igpulse.R
 import com.igpulse.xposed.bridge.IgIIFace
 import com.igpulse.xposed.bridge.client.BridgeClientKt
@@ -75,11 +79,58 @@ object IgCore {
 
     @JvmStatic
     fun initModuleContext(app: Application) {
-        val ctx = app.createPackageContext(
-            BuildConfig.APPLICATION_ID,
-            Context.CONTEXT_INCLUDE_CODE or Context.CONTEXT_IGNORE_SECURITY
-        )
+        val ctx = try {
+            app.createPackageContext(
+                BuildConfig.APPLICATION_ID,
+                Context.CONTEXT_INCLUDE_CODE or Context.CONTEXT_IGNORE_SECURITY
+            )
+        } catch (e: PackageManager.NameNotFoundException) {
+            // The module package is not resolvable from the hooked process (not installed
+            // for this user, or hidden by package-visibility rules). This must not abort
+            // the whole hook load, so fall back to resources read straight from the
+            // module APK that LSPosed loaded us from.
+            XposedBridge.log("[IG-Pulse] module package not visible, APK-path fallback: ${e.message}")
+            apkModuleContext(app) ?: throw PackageManager.NameNotFoundException(
+                runCatching { app.getString(R.string.alert_module_notfound) }
+                    .getOrNull() ?: "IG-Pulse not installed"
+            )
+        }
         moduleContext = ContextThemeWrapper(ctx, R.style.AppTheme)
+    }
+
+    /**
+     * Module-owned [Context] backed by the module APK file instead of
+     * `createPackageContext`. Returns `null` when the APK path or the hooked
+     * resources are not available yet, in which case the caller rethrows.
+     */
+    private fun apkModuleContext(app: Application): Context? {
+        val path = IGPulse.modulePath ?: return null
+        val hostRes = IGPulse.resParam?.res ?: return null
+        return try {
+            ModuleApkContext(app, XModuleResources.createInstance(path, hostRes))
+        } catch (t: Throwable) {
+            XposedBridge.log("[IG-Pulse] APK-path module context failed")
+            XposedBridge.log(t)
+            null
+        }
+    }
+
+    /**
+     * [ContextThemeWrapper] whose resources/assets come from the module APK. The theme
+     * resolves through [getResources], so `R.style.AppTheme` (never remapped into the
+     * host table) still points at the module's own resource table here.
+     */
+    private class ModuleApkContext(base: Context, modRes: Resources) :
+        ContextThemeWrapper(base, R.style.AppTheme) {
+
+        private val moduleRes: Resources = modRes
+
+        override fun getResources(): Resources = moduleRes
+
+        override fun getAssets(): AssetManager = moduleRes.assets
+
+        override fun getClassLoader(): ClassLoader =
+            ModuleApkContext::class.java.classLoader ?: super.getClassLoader()
     }
 
     /**

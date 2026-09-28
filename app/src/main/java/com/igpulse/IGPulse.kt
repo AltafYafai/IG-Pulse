@@ -24,13 +24,20 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 class IGPulse : IXposedHookLoadPackage, IXposedHookInitPackageResources, IXposedHookZygoteInit {
 
-    private var modulePath: String? = null
-
     companion object {
         private var pref: XSharedPreferences? = null
 
         @JvmStatic
         var resParam: InitPackageResourcesParam? = null
+
+        /**
+         * Filesystem path of the module APK that LSPosed loaded. Read by `IgCore` as a
+         * fallback when the module package is not resolvable from the hooked process
+         * (not installed for that user, or hidden by package-visibility rules).
+         */
+        @JvmStatic
+        var modulePath: String? = null
+            private set
 
         @JvmStatic
         fun getPref(): XSharedPreferences {
