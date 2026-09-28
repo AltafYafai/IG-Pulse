@@ -135,6 +135,9 @@ dependencies {
     // Local aar: dexkit 2.2.0 on Maven has breaking API changes that this codebase has not
     // been migrated to. Swap for libs.dexkit once the migration lands.
     implementation(files("libs/dexkit-android.aar"))
+    // DexKit's runtime (FlatBuffers). files() deps have no transitive POM, so this must
+    // be declared explicitly or every query fails with NoClassDefFoundError.
+    implementation(libs.flatbuffers)
 
     compileOnly(libs.libxposed.legacy)
 

@@ -94,7 +94,15 @@ object Unobfuscator {
      */
     private fun <T> resolve(feature: String, anchors: List<String>, type: StringMatchType, hit: (String) -> T?): T? {
         for (anchor in anchors) {
-            val result = runCatching { hit(anchor) }.getOrNull()
+            val result = try {
+                hit(anchor)
+            } catch (t: Throwable) {
+                // A throwing query means broken infrastructure (missing runtime dep, bad
+                // APK path), not a stale anchor. Surface it: silent misses here once hid
+                // a NoClassDefFoundError that disabled every feature at once.
+                XposedBridge.log("[IG-Pulse] $feature anchor \"$anchor\" query failed: $t")
+                null
+            }
             if (result != null) {
                 XposedBridge.log("[IG-Pulse] $feature <- \"$anchor\" -> ${describe(result)}")
                 return result

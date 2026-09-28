@@ -8,6 +8,7 @@ remotePreferences = "0.8"
 xposed-legacy = "82"
 agp = "9.4.1"
 dexkit = "2.3.0"
+flatbuffers = "25.2.10"
 
 [libraries]
 arscblamer = { module = "com.github.DavidArsene:arscblamer", version.ref = "arscblamer" }
@@ -23,6 +24,9 @@ androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version = "1.
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 # Local aar only. Once Unobfuscator is migrated off the 2.x APIs, switch build.gradle.kts to this.
 dexkit = { module = "org.luckypray:dexkit", version.ref = "dexkit" }
+# Runtime dependency of the local dexkit aar above. A bare files() dep carries no POM,
+# so without this every DexKit query dies with NoClassDefFoundError: FlatBufferBuilder.
+flatbuffers = { module = "com.google.flatbuffers:flatbuffers-java", version.ref = "flatbuffers" }
 rikkax-appcompat = { module = "dev.rikka.rikkax.appcompat:appcompat", version = "1.6.1" }
 rikkax-core = { module = "dev.rikka.rikkax.core:core", version = "1.4.1" }
 rikkax-material = { module = "dev.rikka.rikkax.material:material", version = "2.7.0" }

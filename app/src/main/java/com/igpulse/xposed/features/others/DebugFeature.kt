@@ -61,18 +61,6 @@ class DebugFeature(
         log("resources injected: ${IGPulse.resParam != null}")
         log("host: ${IgCore.moduleContext.packageName}")
 
-        // TEMP-DIAG(449): dexkit blindness check, revert after re-pinning anchors.
-        runCatching {
-            val appInfo = app.applicationInfo
-            val apkSize = runCatching { File(appInfo.sourceDir).length() }.getOrDefault(-1)
-            log("apk: ${appInfo.sourceDir} size=$apkSize splits=${appInfo.splitSourceDirs?.size ?: 0}")
-            listOf("instagram", "MainTab", "direct_v2/").forEach { needle ->
-                val report = runCatching { Unobfuscator.probe(classLoader, needle) }
-                    .getOrElse { "probe FAILED: ${it.message}" }
-                report.lineSequence().take(6).forEach { log(it) }
-            }
-        }.onFailure { log("diag failed: ${it.message}") }
-
         listOf(
             "getPresence" to Unobfuscator.loadGetPresenceMethod(classLoader),
             "seenItems" to Unobfuscator.loadSeenItemsMethod(classLoader),
